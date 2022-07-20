@@ -54,10 +54,11 @@ public class WarehouseServlet extends HttpServlet {
 		
 		if (warehouse == null) { // unable to insert into database
 			resp.setStatus(400);
+		} else {
+			resp.setContentType("application/json");
+			resp.getWriter().print(mapper.writeValueAsString(warehouse));
+			resp.setStatus(201);
 		}
-		resp.setContentType("application/json");
-		resp.getWriter().print(mapper.writeValueAsString(warehouse));
-		resp.setStatus(201);
 	}
 	
 	@Override

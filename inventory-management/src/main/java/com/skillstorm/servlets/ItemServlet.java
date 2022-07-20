@@ -54,16 +54,18 @@ public class ItemServlet extends HttpServlet{
 		
 		if (item == null) { // unable to insert into database
 			resp.setStatus(500);
+		} else {
+			resp.setContentType("application/json");
+			resp.getWriter().print(mapper.writeValueAsString(item));
+			resp.setStatus(201);
 		}
-		resp.setContentType("application/json");
-		resp.getWriter().print(mapper.writeValueAsString(item));
 	}
 	
 	@Override
 	// update entry in database
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		InputStream reqBody = req.getInputStream(); // get JSON request body
-		Item item = mapper.readValue(reqBody, Item.class); // translate to Warehouse object
+		Item item = mapper.readValue(reqBody, Item.class); // translate to object
 		
 		// update all attributes
 		dao.updateName(item);
@@ -78,7 +80,7 @@ public class ItemServlet extends HttpServlet{
 	// delete entry in database
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		InputStream reqBody = req.getInputStream(); // get JSON request body
-		Item item = mapper.readValue(reqBody, Item.class); // translate to Warehouse object
+		Item item = mapper.readValue(reqBody, Item.class); // translate to object
 		dao.delete(item);
 		resp.setStatus(200);
 	}
