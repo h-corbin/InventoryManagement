@@ -21,14 +21,16 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 	 */
 	@Override
 	public Warehouse save(Warehouse warehouse) {
-		String sql = "INSERT INTO Warehouse (Name, Capacity) VALUES (?, ?)";
+		String sql = "INSERT INTO Warehouse (Name, Location, Capacity, CurrentVolume) VALUES (?, ?, ?, ?)";
 		
 		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
 			// start a transaction
 			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, warehouse.getName());
-			ps.setDouble(2, warehouse.getCapacity());
+			ps.setString(2, warehouse.getLocation());
+			ps.setDouble(3, warehouse.getCapacity());
+			ps.setDouble(4, warehouse.getVolume());
 			
 			int rowsAffected = ps.executeUpdate();
 			// if 0 is returned, data did not save
@@ -44,6 +46,7 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 				conn.rollback(); // rollback if nothing was returned
 			} 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return null;
 		}
 		
