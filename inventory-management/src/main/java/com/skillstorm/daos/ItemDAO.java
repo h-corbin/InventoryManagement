@@ -17,6 +17,7 @@ public interface ItemDAO {
 		public void updateName(Item item);
 		public void updateDescription(Item item);
 		public void updateSize(Item item);
+		public void updateLocation(Item item);
 		
 		// delete
 		public void delete(Item item);

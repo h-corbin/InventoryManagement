@@ -13,13 +13,11 @@ public interface WarehouseDAO {
 	public List<Warehouse> findall();
 	public Warehouse findById(int id);
 	public Warehouse findByName(String name);
-	public Warehouse findByLocation(String name);
-	
 	// update
 	public void updateName(Warehouse warehouse);
 	public void updateCapacity(Warehouse warehouse);
 	public void updateVolume(Warehouse warehouse);
-	public void updateLocation(Warehouse warehouse);
+	public void updateAddress(Warehouse warehouse);
 	
 	// delete
 	public void delete(Warehouse warehouse);

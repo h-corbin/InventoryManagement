@@ -19,7 +19,7 @@ public class MySQLItemDAOImpl implements ItemDAO{
      */
 	@Override
 	public Item save(Item item) {
-        String sql = "INSERT INTO Item (Name, Description, Size) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Item (Name, Description, Size, Location) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
             // start a transaction
@@ -28,6 +28,7 @@ public class MySQLItemDAOImpl implements ItemDAO{
             ps.setString(1, item.getName());
             ps.setString(2, item.getDescription());
             ps.setDouble(3, item.getSize());
+            ps.setString(4, item.getLocation());
 
             int rowsAffected = ps.executeUpdate();
             // if 0 is returned, data did not save
@@ -62,7 +63,7 @@ public class MySQLItemDAOImpl implements ItemDAO{
             ResultSet rs = ps. executeQuery();
 
             while(rs.next()) {
-                Item item = new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getString("Description"), rs.getDouble("Size"));
+                Item item = new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getString("Description"), rs.getDouble("Size"), rs.getString("Location"));
                 itemList.add(item);
             }
             return itemList;
@@ -80,7 +81,7 @@ public class MySQLItemDAOImpl implements ItemDAO{
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getString("Description"), rs.getDouble("Size"));
+                return new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getString("Description"), rs.getDouble("Size"), rs.getString("Location"));
             }
         } catch (SQLException e) {
             return null;
@@ -156,6 +157,15 @@ public class MySQLItemDAOImpl implements ItemDAO{
 	@Override
 	public void updateSize(Item item) {
 		String sql = "UPDATE Item SET Size = ? WHERE ItemId = ?";
+        executeUpdate(sql, item, item.getSize());
+	}
+	
+	/**
+     * @param item Item object with location to be updated in the database
+     */
+	@Override
+	public void updateLocation(Item item) {
+		String sql = "UPDATE Item SET Location = ? WHERE ItemId = ?";
         executeUpdate(sql, item, item.getSize());
 	}
 

@@ -36,7 +36,7 @@ public class WarehouseServlet extends HttpServlet {
 				resp.setContentType("application/json");
 				resp.getWriter().print(mapper.writeValueAsString(warehouse));
 			} else {
-				resp.setStatus(401); // unable to find warehouse
+				resp.setStatus(404); // unable to find warehouse
 			}
 		} catch (Exception e) { // request is for all warehouses
 			List<Warehouse> warehouseList = dao.findall();
@@ -53,10 +53,11 @@ public class WarehouseServlet extends HttpServlet {
 		warehouse = dao.save(warehouse); // add to database, get back object with generated key
 		
 		if (warehouse == null) { // unable to insert into database
-			resp.setStatus(500);
+			resp.setStatus(400);
 		}
 		resp.setContentType("application/json");
 		resp.getWriter().print(mapper.writeValueAsString(warehouse));
+		resp.setStatus(201);
 	}
 	
 	@Override
@@ -68,7 +69,7 @@ public class WarehouseServlet extends HttpServlet {
 		// update all attributes
 		dao.updateName(warehouse);
 		dao.updateCapacity(warehouse);
-		dao.updateLocation(warehouse);
+		dao.updateAddress(warehouse);
 		dao.updateVolume(warehouse);
 		resp.setStatus(200);
 		

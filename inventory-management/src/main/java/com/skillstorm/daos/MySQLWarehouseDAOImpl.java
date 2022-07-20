@@ -21,14 +21,14 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 	 */
 	@Override
 	public Warehouse save(Warehouse warehouse) {
-		String sql = "INSERT INTO Warehouse (Name, Location, Capacity, CurrentVolume) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO Warehouse (Name, Address, Capacity, CurrentVolume) VALUES (?, ?, ?, ?)";
 		
 		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
 			// start a transaction
 			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, warehouse.getName());
-			ps.setString(2, warehouse.getLocation());
+			ps.setString(2, warehouse.getAddress());
 			ps.setDouble(3, warehouse.getCapacity());
 			ps.setDouble(4, warehouse.getVolume());
 			
@@ -70,7 +70,7 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 			ResultSet rs = ps. executeQuery();
 			
 			while(rs.next()) {
-				Warehouse warehouse = new Warehouse(rs.getInt("WarehouseId"), rs.getString("Name"), rs.getString("Location"), rs.getDouble("Capacity"), rs.getDouble("CurrentVolume"));
+				Warehouse warehouse = new Warehouse(rs.getInt("WarehouseId"), rs.getString("Name"), rs.getString("Address"), rs.getDouble("Capacity"), rs.getDouble("CurrentVolume"));
 				warehouseList.add(warehouse);
 			}
 	
@@ -90,7 +90,7 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next()) {
-				return new Warehouse(rs.getInt("WarehouseId"), rs.getString("Name"), rs.getString("Location"), rs.getDouble("Capacity"), rs.getDouble("CurrentVolume"));	
+				return new Warehouse(rs.getInt("WarehouseId"), rs.getString("Name"), rs.getString("Address"), rs.getDouble("Capacity"), rs.getDouble("CurrentVolume"));	
 			}
 		} catch (SQLException e) {
 			return null;
@@ -116,16 +116,6 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 	public Warehouse findByName(String name) {
 		String sql = "SELECT * FROM Warehouse WHERE Name = ?";
 		return executeFind(sql, name);
-	}
-	
-	/**
-	 * @param location location of the warehouse to search for
-	 * @return Warehouse object with the given location, if found. Null if not found
-	 */
-	@Override
-	public Warehouse findByLocation(String location) {
-		String sql = "SELECT * FROM Warehouse WHERE Location = ?";
-		return executeFind(sql, location);
 	}
 	
 	
@@ -184,9 +174,9 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 	 * @param warehouse Warehouse object with location field to be updated in the database
 	 */
 	@Override
-	public void updateLocation(Warehouse warehouse) {
-		String sql = "UPDATE Warehouse SET CurrentVolume = ? WHERE WarehouseId = ?";
-		executeUpdate(sql, warehouse, warehouse.getLocation());
+	public void updateAddress(Warehouse warehouse) {
+		String sql = "UPDATE Warehouse SET Address = ? WHERE WarehouseId = ?";
+		executeUpdate(sql, warehouse, warehouse.getAddress());
 	}
 
 

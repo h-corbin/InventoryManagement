@@ -6,9 +6,9 @@ USE InventoryManagement;
 CREATE TABLE Warehouse (
   WarehouseId INT  NOT NULL AUTO_INCREMENT,
   Name VARCHAR(45),
-  Location VARCHAR(45),
-  Capacity DECIMAL(10,4),
-  CurrentVolume DECIMAL(10,4),
+  Address VARCHAR(45),
+  Capacity DECIMAL(12,4),
+  CurrentVolume DECIMAL(12,4),
   PRIMARY KEY (WarehouseId)
 );
 
@@ -17,7 +17,8 @@ CREATE TABLE Item (
   ItemId INT NOT NULL AUTO_INCREMENT,
   Name VARCHAR(45),
   Description VARCHAR(500),
-  Size DECIMAL(10,4) NOT NULL,
+  Size DECIMAL(12,4) NOT NULL,
+  Location VARCHAR(45),
   PRIMARY KEY (itemId)
 );
 
