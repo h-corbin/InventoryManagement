@@ -24,11 +24,12 @@ export class WarehouseFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
   submit(warehouse :Warehouse) :void {
-    this.warehouseApiService.save(warehouse).subscribe(); // send post request to add to the database
+    this.warehouseApiService.save(warehouse).subscribe( () => { // send post request to add to the database
+      this.warehousesUpdated.emit() // tell warehouse-list component to update
+    }); 
+
     this.warehouseFromForm = new Warehouse; // reset the form
-    this.warehousesUpdated.emit() // tell warehouse-list component to update
   }
 
 }

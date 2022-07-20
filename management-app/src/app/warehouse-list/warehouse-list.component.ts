@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Warehouse } from 'src/models/Warehouse';
 import { WarehouseApiService } from '../warehouse-api.service';
 
@@ -23,12 +24,13 @@ export class WarehouseListComponent implements OnInit {
     });
   }
 
+
   onUpdate() {
     this.warehouseApiService.findAll().subscribe(resp => {
       // get request should repond with list of warehouses
       this.warehouseList = resp;
     });
-    window.location.reload();
+    
   }
 
 }

@@ -23,5 +23,4 @@ export class WarehouseApiService {
   save(warehouse :Warehouse) :Observable<any>{
     return this.http.post(this.url, warehouse);
   }
-
 }
