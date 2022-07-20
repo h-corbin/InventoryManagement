@@ -1,0 +1,12 @@
+<form (ngSubmit)="submit(warehouseFromForm)">
+    <label for="name">Name: </label>
+    <input type="text" name="name" [(ngModel)]="warehouseFromForm.name"/>
+    
+    <label for="address">Adress: </label>
+    <input type="text" name="address" [(ngModel)]="warehouseFromForm.address"/>
+
+    <label for="capacity">Capacity: </label>
+    <input type="numer" name="capacity" [(ngModel)]="warehouseFromForm.capacity"/>
+    
+    <input type="submit" value="Submit"/>
+</form>

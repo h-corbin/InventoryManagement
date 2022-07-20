@@ -6,17 +6,23 @@ import { AppComponent } from './app.component';
 import { WarehouseListComponent } from './warehouse-list/warehouse-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AllItemsComponent } from './all-items/all-items.component';
+import { WarehouseInventoryComponent } from './warehouse-inventory/warehouse-inventory.component';
+import { WarehouseFormComponent } from './warehouse-form/warehouse-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     WarehouseListComponent,
-    AllItemsComponent
+    AllItemsComponent,
+    WarehouseInventoryComponent,
+    WarehouseFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
 
   ],
   providers: [],

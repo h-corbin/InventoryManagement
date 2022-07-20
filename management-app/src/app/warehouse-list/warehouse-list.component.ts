@@ -23,4 +23,12 @@ export class WarehouseListComponent implements OnInit {
     });
   }
 
+  onUpdate() {
+    this.warehouseApiService.findAll().subscribe(resp => {
+      // get request should repond with list of warehouses
+      this.warehouseList = resp;
+    });
+    window.location.reload();
+  }
+
 }
