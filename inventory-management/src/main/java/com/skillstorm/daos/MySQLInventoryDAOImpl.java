@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.skillstorm.conf.InventoryManagementDBCreds;
 import com.skillstorm.models.Inventory;
+import com.skillstorm.models.Item;
 
 public class MySQLInventoryDAOImpl implements InventoryDAO{
 
@@ -118,17 +119,14 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 		return null; // indicates failure
 	}
 
-	/**
-	 * @param inventory Inventory object with quantity to be updated in the database
-	 */
-	@Override
-	public void updateQuantity(Inventory inventory) {
-		String sql = "UPDATE Inventory SET Quantity = ? WHERE WarehouseId = ? AND ItemId = ?";
-		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
+	
+	// helper method for updates
+    private void executeUpdate(String sql, Inventory inventory, Object updatedValue) {
+    	try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
 			conn.setAutoCommit(false); // start a transaction
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, inventory.getQuantity());
+			ps.setObject(1, updatedValue);
 			ps.setInt(2, inventory.getWarehouseId());
 			ps.setInt(3, inventory.getItemId() );
 			
@@ -143,7 +141,25 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+    }
+	
+	/**
+	 * @param inventory Inventory object with quantity to be updated in the database
+	 */
+	@Override
+	public void updateQuantity(Inventory inventory) {
+		String sql = "UPDATE Inventory SET Quantity = ? WHERE WarehouseId = ? AND ItemId = ?";
+		executeUpdate(sql, inventory, inventory.getQuantity());
 		
+	}
+	
+	/**
+     * @param inventory Inventory object with location to be updated in the database
+     */
+	@Override
+	public void updateLocation(Inventory inventory) {
+		String sql = "UPDATE Inventory SET Location = ? WHERE WarehouseId = ? AND ItemId = ?";
+        executeUpdate(sql, inventory, inventory.getLocation());
 	}
 
 

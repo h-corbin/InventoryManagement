@@ -71,6 +71,7 @@ public class InventoryServlet extends HttpServlet{
 		
 		// update all attributes
 		dao.updateQuantity(inventory);
+		dao.updateLocation(inventory);
 		resp.setStatus(200);
 		
 	}

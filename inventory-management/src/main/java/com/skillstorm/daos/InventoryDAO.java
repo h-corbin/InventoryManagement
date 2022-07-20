@@ -16,6 +16,7 @@ public interface InventoryDAO {
 	
 	// update
 	public void updateQuantity(Inventory inventory);
+	public void updateLocation(Inventory inventory);
 	
 	// delete
 	public void delete(Inventory inventory);

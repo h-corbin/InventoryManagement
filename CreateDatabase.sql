@@ -18,7 +18,6 @@ CREATE TABLE Item (
   Name VARCHAR(45),
   Description VARCHAR(500),
   Size DECIMAL(12,4) NOT NULL,
-  Location VARCHAR(45),
   PRIMARY KEY (itemId)
 );
 
@@ -27,6 +26,7 @@ CREATE TABLE Inventory (
   ItemId INT NOT NULL,
   WarehouseId INT NOT NULL,
   Quantity INT NOT NULL,
+  Location VARCHAR(45),
   PRIMARY KEY (ItemId, WarehouseId),
   INDEX warehouse_idx (WarehouseId ASC) VISIBLE,
   CONSTRAINT item FOREIGN KEY (ItemId) REFERENCES Item (ItemId),

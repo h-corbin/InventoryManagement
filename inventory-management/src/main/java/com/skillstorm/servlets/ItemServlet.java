@@ -71,7 +71,6 @@ public class ItemServlet extends HttpServlet{
 		dao.updateName(item);
 		dao.updateDescription(item);
 		dao.updateSize(item);
-		dao.updateLocation(item);
 		resp.setStatus(200);
 		
 	}
