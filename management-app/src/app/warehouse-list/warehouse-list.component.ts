@@ -18,10 +18,7 @@ export class WarehouseListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.warehouseApiService.findAll().subscribe(resp => {
-      // get request should repond with list of warehouses
-      this.warehouseList = resp;
-    });
+    this.onUpdate();
   }
 
 
@@ -30,7 +27,6 @@ export class WarehouseListComponent implements OnInit {
       // get request should repond with list of warehouses
       this.warehouseList = resp;
     });
-    
   }
 
 }

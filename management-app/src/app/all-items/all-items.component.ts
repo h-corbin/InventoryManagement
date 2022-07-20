@@ -17,6 +17,11 @@ export class AllItemsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.onUpdate();
+  }
+
+
+  onUpdate() {
     this.itemApiService.findAll().subscribe(resp => {
       // get request should repond with list of warehouses
       this.itemList = resp;

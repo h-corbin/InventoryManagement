@@ -9,6 +9,7 @@ import { AllItemsComponent } from './all-items/all-items.component';
 import { WarehouseInventoryComponent } from './warehouse-inventory/warehouse-inventory.component';
 import { WarehouseFormComponent } from './warehouse-form/warehouse-form.component';
 import { FormsModule } from '@angular/forms';
+import { ItemFormComponent } from './item-form/item-form.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     WarehouseListComponent,
     AllItemsComponent,
     WarehouseInventoryComponent,
-    WarehouseFormComponent
+    WarehouseFormComponent,
+    ItemFormComponent
   ],
   imports: [
     BrowserModule,
