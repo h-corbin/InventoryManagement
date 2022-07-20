@@ -5,11 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WarehouseListComponent } from './warehouse-list/warehouse-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AllItemsComponent } from './all-items/all-items.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WarehouseListComponent
+    WarehouseListComponent,
+    AllItemsComponent
   ],
   imports: [
     BrowserModule,

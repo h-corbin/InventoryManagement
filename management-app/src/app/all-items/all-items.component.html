@@ -1,0 +1,9 @@
+<table>
+    <tr><th>ID</th><th>Name</th><th>Description</th><th>Size</th></tr>
+    <tr *ngFor="let item of itemList">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.size }}</td>
+    </tr>
+</table>
