@@ -28,7 +28,7 @@ public class WarehouseServlet extends HttpServlet {
 	@Override
 	// return all 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Warehouse> warehouseList = dao.findall()
+		List<Warehouse> warehouseList = dao.findall();
 		resp.setContentType("application/json");
 		resp.getWriter().print(mapper.writeValueAsString(warehouseList));
 	}
