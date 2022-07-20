@@ -1,3 +1,10 @@
-Hello
-<app-warehouse-list ></app-warehouse-list>
-<app-all-items></app-all-items>
+<nav>
+    <a [routerLink]="['/warehouse-list']">List Warehouses</a> 
+    | <a [routerLink]="['/item-list']">List All Items</a> 
+</nav>
+
+<section>
+    <router-outlet></router-outlet>
+</section>
+
+<button type="button" pButton label="PrimeNG"></button>

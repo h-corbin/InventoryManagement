@@ -10,6 +10,7 @@ import { WarehouseInventoryComponent } from './warehouse-inventory/warehouse-inv
 import { WarehouseFormComponent } from './warehouse-form/warehouse-form.component';
 import { FormsModule } from '@angular/forms';
 import { ItemFormComponent } from './item-form/item-form.component';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -24,8 +25,8 @@ import { ItemFormComponent } from './item-form/item-form.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
-
+    FormsModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
