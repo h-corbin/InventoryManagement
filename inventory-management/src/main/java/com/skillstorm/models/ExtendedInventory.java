@@ -10,6 +10,8 @@ public class ExtendedInventory {
 	String itemName;
 	String itemDescription;
 	
+	public ExtendedInventory() {}
+	
 	public ExtendedInventory(int itemId, int warehouseId, int quantity, String location, String warehouseName,
 			String itemName, String itemDescription) {
 		super();

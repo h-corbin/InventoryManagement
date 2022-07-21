@@ -1,0 +1,12 @@
+<table>
+    <tr><th>Item ID</th><th>Name</th><th>Description</th><th>Size</th></tr>
+    <tr *ngFor="let item of itemList; let i = index">
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.itemId }}</td>
+        <td>{{ item.itemName }}</td>
+        <td>{{ item.itemDescription }}</td>
+        <td> <button (click)="onDelete(item, i)">Delete</button> </td>
+    </tr>
+</table>
+
+{{warehouse.id}}

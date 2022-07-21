@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skillstorm.daos.InventoryDAO;
 import com.skillstorm.daos.MySQLInventoryDAOImpl;
-import com.skillstorm.models.Inventory;
+import com.skillstorm.models.ExtendedInventory;
+import com.skillstorm.models.Warehouse;
 
 @WebServlet(urlPatterns = "/inventory/warehouse")
 public class InventoryByWarehouseServlet  extends HttpServlet {
@@ -28,15 +29,15 @@ public class InventoryByWarehouseServlet  extends HttpServlet {
 	// using put request because Angular doesn't have method body on get request
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		InputStream reqBody = req.getInputStream(); // get JSON request body
-		Inventory inventory = mapper.readValue(reqBody, Inventory.class); // translate to object
+		Warehouse warehouse = mapper.readValue(reqBody, Warehouse.class); // translate to object
 		
-		List<Inventory> inventoryList = dao.findByWarehouseId(inventory.getWarehouseId());
+		List<ExtendedInventory> inventoryList = dao.findItemsByWarehouseId(warehouse.getId());
 		if (inventoryList != null) {
 			resp.setContentType("application/json");
 			resp.getWriter().print(mapper.writeValueAsString(inventoryList));
 		} else {
 			resp.setStatus(404); // not found
 		}
-		
+		 
 	}
 }

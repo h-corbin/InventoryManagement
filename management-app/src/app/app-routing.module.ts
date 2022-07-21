@@ -15,6 +15,9 @@ const routes: Routes = [
   }, {
     path : 'inventory-list',
     component : AllInventoryComponent
+  }, {
+    path : 'warehouse-inventory',
+    component : WarehouseInventoryComponent
   }
 ];
 

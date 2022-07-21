@@ -1,17 +1,19 @@
 
 <table>
     <tr><th>ID</th><th>Name</th><th>Address</th><th>Capacity</th><th>Current Volume</th></tr>
-    <tr *ngFor="let warehouse of warehouseList; let i = index" (click)="onWarehouseClick()">
+    <tr *ngFor="let warehouse of warehouseList; let i = index">
         <td>{{ warehouse.id }}</td>
         <td>{{ warehouse.name }}</td>
         <td>{{ warehouse.address }}</td>
         <td>{{ warehouse.capacity }}</td>
         <td>{{ warehouse.volume }}</td>
         <td> <button (click)="onDelete(warehouse, i)">Delete</button> </td>
+        <td> <button (click)="showInventory(warehouse)">Show Inventory</button> </td>
     </tr>
 </table>
 
 <br/>
 
-
 <app-warehouse-form (warehousesUpdated)="onUpdate()" ></app-warehouse-form>
+
+<app-warehouse-inventory [warehouse]="warehouseClicked" ></app-warehouse-inventory>

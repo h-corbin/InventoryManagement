@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { catchError, of, throwError } from 'rxjs';
 import { Warehouse } from 'src/models/Warehouse';
 import { WarehouseApiService } from '../warehouse-api.service';
@@ -12,7 +12,7 @@ export class WarehouseListComponent implements OnInit {
 
   warehouseApiService :WarehouseApiService;
   warehouseList :Array<Warehouse> = [];
-
+  warehouseClicked :Warehouse = new Warehouse();
   
   constructor(warehouseApiService :WarehouseApiService) { 
     this.warehouseApiService = warehouseApiService;
@@ -41,13 +41,20 @@ export class WarehouseListComponent implements OnInit {
           return throwError(() => new Error("Unable to delete Warehouse \n Make sure warehouse is empty before deleting."))
         })
       ).subscribe( {
-        next: (data) => {alert("Success: warehouse was deleted")},
+        next: (data) => {alert("Success: warehouse was deleted"); this.warehouseList.splice(i,1);},
         error: (err) => {alert(err)}
       });
 
-      this.warehouseList.splice(i,1);
+      
     }
   }
 
-  onWarehouseClick() {}
+  onWarehouseClick(warehouse :Warehouse) {
+    this.warehouseClicked = warehouse;
+  }
+
+  showInventory(warehouse :Warehouse) {
+    this.warehouseClicked = Object.assign({},warehouse)
+  }
+
 }

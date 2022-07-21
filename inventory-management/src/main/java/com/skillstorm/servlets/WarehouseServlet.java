@@ -2,7 +2,6 @@ package com.skillstorm.servlets;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;

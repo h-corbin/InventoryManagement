@@ -12,7 +12,7 @@ public interface InventoryDAO {
 	// read
 	public List<Inventory> findall();
 	public List<ExtendedInventory> extendedFindAll();
-	public List<Inventory> findByWarehouseId(int id);
+	public List<ExtendedInventory> findItemsByWarehouseId(int id);
 	public List<Inventory> findByItemId(int id);
 	public Inventory findUnique(int warehouseId, int itemId);
 	

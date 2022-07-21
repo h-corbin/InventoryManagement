@@ -26,11 +26,11 @@ export class WarehouseApiService {
   }
 
   // deletes warehouse from the database
-  // if items are in the database, an error will be thrown
+  // if items are in the warehouse, an error will be thrown
   delete(warehouse :Warehouse) :Observable<any> {
     return this.http.delete(this.url, {body: warehouse}).pipe(
       catchError( throwError )
     )
   }
-  
+
 }

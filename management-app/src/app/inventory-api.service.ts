@@ -30,4 +30,8 @@ export class InventoryApiService {
   InventoryByWarehouse(inventory :Inventory) :Observable<any> {
     return this.http.put(this.url + "warehouse", inventory)
   }
+
+  delete(inventory :Inventory) :Observable<any> {
+    return this.http.delete(this.url, {body: inventory})
+  }
 }

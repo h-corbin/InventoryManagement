@@ -45,35 +45,6 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 		return null;
 	}
 	
-	
-	/**
-	 * @return List of rows in Inventory table, inner join with Warehouse and Item. Null in the event of failure
-	 */
-	@Override
-	public List<ExtendedInventory> extendedFindAll() {
-		String sql = "SELECT Inventory.Quantity, Inventory.Location, Warehouse.WarehouseId, Item.ItemId, "
-				+ "Warehouse.Name, Item.Name, Item.Description "
-				+ "FROM Inventory "
-				+ "JOIN Warehouse ON Inventory.WarehouseId = Warehouse.WarehouseId "
-				+ "JOIN Item ON Inventory.ItemId = Item.ItemId";
-		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
-			LinkedList<ExtendedInventory> inventoryList = new LinkedList<>();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			
-			while(rs.next()) {
-				ExtendedInventory inventory = new ExtendedInventory(rs.getInt("Item.ItemId"), rs.getInt("Warehouse.WarehouseId"), rs.getInt("Inventory.Quantity"),
-						rs.getString("Inventory.Location"), rs.getString("Warehouse.Name"), rs.getString("Item.Name"),  rs.getString("Item.Description"));
-				inventoryList.add(inventory);
-			}
-	
-			return inventoryList;
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-			return null;
-		}
-	}
 
 	
 	// helper for find methods
@@ -104,17 +75,9 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 		String sql = "SELECT * FROM Inventory";
 		return executeFind(sql, null);
 	}
-
-	/**
-	 * @param id WarehouseId of the warehouse to search for
-	 * @return Warehouse object with the given id, if found. Null if not found
-	 */
-	@Override
-	public List<Inventory> findByWarehouseId(int id) {
-		String sql = "SELECT * FROM Inventory WHERE WarehouseId = ?";
-		return executeFind(sql, id);
-	}
-
+	
+	
+	
 	/**
 	 * @param id ItemId of the warehouse to search for
 	 * @return Warehouse object with the given id, if found. Null if not found
@@ -124,6 +87,59 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 		String sql = "SELECT * FROM Inventory WHERE ItemId = ?";
 		return executeFind(sql, id);
 	}
+	
+	
+	// helper for extended find methods
+	private List<ExtendedInventory> executeExtendedFind(String sql, Integer findValue) {
+		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
+			LinkedList<ExtendedInventory> inventoryList = new LinkedList<>();		
+			PreparedStatement ps = conn.prepareStatement(sql);
+			if (findValue != null) ps.setObject(1, findValue);
+			ResultSet rs = ps. executeQuery();
+			
+			
+			while(rs.next()) {
+				ExtendedInventory inventory = new ExtendedInventory(rs.getInt("Item.ItemId"), rs.getInt("Warehouse.WarehouseId"), rs.getInt("Inventory.Quantity"),
+						rs.getString("Inventory.Location"), rs.getString("Warehouse.Name"), rs.getString("Item.Name"),  rs.getString("Item.Description"));
+				inventoryList.add(inventory);
+			}
+	
+			return inventoryList;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
+	
+	/**
+	 * @return List of rows in Inventory table, inner join with Warehouse and Item. Null in the event of failure
+	 */
+	@Override
+	public List<ExtendedInventory> extendedFindAll() {
+		String sql = "SELECT Inventory.Quantity, Inventory.Location, Warehouse.WarehouseId, Item.ItemId, "
+				+ "Warehouse.Name, Item.Name, Item.Description "
+				+ "FROM Inventory "
+				+ "JOIN Warehouse ON Inventory.WarehouseId = Warehouse.WarehouseId "
+				+ "JOIN Item ON Inventory.ItemId = Item.ItemId";
+		return executeExtendedFind(sql, null);
+	}
+
+	/**
+	 * @param id WarehouseId of the warehouse to search for
+	 * @return Warehouse object with the given id, if found. Null if not found
+	 */
+	@Override
+	public List<ExtendedInventory> findItemsByWarehouseId(int id) {
+		String sql = "SELECT Inventory.Quantity, Inventory.Location, Warehouse.WarehouseId, Item.ItemId, "
+				+ "Warehouse.Name, Item.Name, Item.Description "
+				+ "FROM Inventory "
+				+ "JOIN Warehouse ON Inventory.WarehouseId = Warehouse.WarehouseId "
+				+ "JOIN Item ON Inventory.ItemId = Item.ItemId "
+				+ "WHERE Warehouse.WarehouseID = ?";
+		return executeExtendedFind(sql, id);
+	}
+
+	
 
 	/**
 	 * @param warehouseId WarehouseId of the inventory row to search for
