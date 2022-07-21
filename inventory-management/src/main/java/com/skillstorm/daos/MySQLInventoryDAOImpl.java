@@ -9,8 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.skillstorm.conf.InventoryManagementDBCreds;
+import com.skillstorm.models.ExtendedInventory;
 import com.skillstorm.models.Inventory;
-import com.skillstorm.models.Item;
 
 public class MySQLInventoryDAOImpl implements InventoryDAO{
 
@@ -43,6 +43,36 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 		}
 		
 		return null;
+	}
+	
+	
+	/**
+	 * @return List of rows in Inventory table, inner join with Warehouse and Item. Null in the event of failure
+	 */
+	@Override
+	public List<ExtendedInventory> extendedFindAll() {
+		String sql = "SELECT Inventory.Quantity, Inventory.Location, Warehouse.WarehouseId, Item.ItemId, "
+				+ "Warehouse.Name, Item.Name, Item.Description "
+				+ "FROM Inventory "
+				+ "JOIN Warehouse ON Inventory.WarehouseId = Warehouse.WarehouseId "
+				+ "JOIN Item ON Inventory.ItemId = Item.ItemId";
+		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
+			LinkedList<ExtendedInventory> inventoryList = new LinkedList<>();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				ExtendedInventory inventory = new ExtendedInventory(rs.getInt("Item.ItemId"), rs.getInt("Warehouse.WarehouseId"), rs.getInt("Inventory.Quantity"),
+						rs.getString("Inventory.Location"), rs.getString("Warehouse.Name"), rs.getString("Item.Name"),  rs.getString("Item.Description"));
+				inventoryList.add(inventory);
+			}
+	
+			return inventoryList;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	

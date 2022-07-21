@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ExtendedInventory } from 'src/models/ExtendedInventory';
+import { InventoryApiService } from '../inventory-api.service';
 
 @Component({
   selector: 'app-warehouse-inventory',
@@ -7,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WarehouseInventoryComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit(): void {
   }

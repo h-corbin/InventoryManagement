@@ -25,7 +25,8 @@ public class InventoryByWarehouseServlet  extends HttpServlet {
 
 	@Override
 	// get inventory by by WarehouseID
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	// using put request because Angular doesn't have method body on get request
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		InputStream reqBody = req.getInputStream(); // get JSON request body
 		Inventory inventory = mapper.readValue(reqBody, Inventory.class); // translate to object
 		

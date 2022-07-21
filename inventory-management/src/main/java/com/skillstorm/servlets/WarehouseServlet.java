@@ -48,9 +48,6 @@ public class WarehouseServlet extends HttpServlet {
 	@Override
 	// create new entry in database
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("POSTING!!!!!!!!!!!!!!");
-		
-		
 		InputStream reqBody = req.getInputStream(); // get JSON request body
 		Warehouse warehouse = mapper.readValue(reqBody, Warehouse.class); // translate to Warehouse object
 		warehouse = dao.save(warehouse); // add to database, get back object with generated key

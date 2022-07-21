@@ -1,0 +1,12 @@
+<table>
+    <tr><th>Warehouse ID</th><th>Item ID</th><th>Warehouse</th><th>Item</th><th>Description</th><th>Quantity</th><th>Location</th></tr>
+    <tr *ngFor="let inventory of expandedInventoryList">
+        <td>{{ inventory.warehouseId }}</td>
+        <td>{{ inventory.itemId }}</td>
+        <td>{{ inventory.warehouseName }}</td>
+        <td>{{ inventory.itemName }}</td>
+        <td>{{ inventory.itemDescription }}</td>
+        <td>{{ inventory.quantity }}</td>
+        <td>{{ inventory.location }}</td>
+    </tr>
+</table>

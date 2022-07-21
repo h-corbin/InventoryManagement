@@ -13,10 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skillstorm.daos.InventoryDAO;
 import com.skillstorm.daos.MySQLInventoryDAOImpl;
+import com.skillstorm.models.ExtendedInventory;
 import com.skillstorm.models.Inventory;
 import com.skillstorm.services.UrlParserService;
 
-@WebServlet(urlPatterns = "/inventory")
+@WebServlet(urlPatterns = "/inventory/*")
 public class InventoryServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 7113837821026482129L;
@@ -40,8 +41,8 @@ public class InventoryServlet extends HttpServlet{
 			} else {
 				resp.setStatus(404); // not found
 			}
-		} catch (Exception e) { // request is for all inventory rows
-			List<Inventory> inventoryList = dao.findall();
+		} catch (Exception e) { // request is for all inventory rows (extended)
+			List<ExtendedInventory> inventoryList = dao.extendedFindAll();
 			resp.setContentType("application/json");
 			resp.getWriter().print(mapper.writeValueAsString(inventoryList));
 		}
