@@ -182,9 +182,10 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 
 	/**
 	 * @param id WarehouseId for row to delete in database
-	 */
+	 * @return 1 if successful, -1 in the even t of failure
+	 */ 
 	@Override
-	public void delete(int id) {
+	public int delete(int id) {
 		String sql = "DELETE FROM Warehouse WHERE WarehouseId = ?";
 		
 		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
@@ -196,25 +197,33 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 			
 			if (rowsAffected != 0) {
 				conn.commit(); // commit transaction
+				
 			} else {
 				conn.rollback(); // rollback if nothing was returned
+				return -1;
 			} 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return -1;
 		}
+		return 1;
 		
 	}
 	
 	
 	@Override
-	public void delete(Warehouse warehouse) {
-		delete(warehouse.getId());
+	public int delete(Warehouse warehouse) {
+		return delete(warehouse.getId());
 	}
 
 	@Override
-	public void deleteMany(int[] ids) {
+	public int deleteMany(int[] ids) {
 		for (int id : ids) {
-			delete(id);
+			int success =  delete(id);
+			if (success == -1) {
+				return -1;
+			}
 		}
+		return 1;
+		
 	}
 }

@@ -20,7 +20,7 @@ public interface WarehouseDAO {
 	public void updateAddress(Warehouse warehouse);
 	
 	// delete
-	public void delete(Warehouse warehouse);
-	public void delete(int id);
-	public void deleteMany(int[] ids);
+	public int delete(Warehouse warehouse);
+	public int delete(int id);
+	public int deleteMany(int[] ids);
 }

@@ -2,6 +2,7 @@ package com.skillstorm.servlets;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -81,7 +82,11 @@ public class WarehouseServlet extends HttpServlet {
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		InputStream reqBody = req.getInputStream(); // get JSON request body
 		Warehouse warehouse = mapper.readValue(reqBody, Warehouse.class); // translate to Warehouse object
-		dao.delete(warehouse);
-		resp.setStatus(200);
+		int sucess = dao.delete(warehouse);
+		if (sucess == 1) {
+			resp.setStatus(200);
+		} else {
+			resp.setStatus(400);
+		}
 	}
 }

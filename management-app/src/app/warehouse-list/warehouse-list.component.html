@@ -1,12 +1,13 @@
 
 <table>
     <tr><th>ID</th><th>Name</th><th>Address</th><th>Capacity</th><th>Current Volume</th></tr>
-    <tr *ngFor="let warehouse of warehouseList">
+    <tr *ngFor="let warehouse of warehouseList; let i = index" (click)="onWarehouseClick()">
         <td>{{ warehouse.id }}</td>
         <td>{{ warehouse.name }}</td>
         <td>{{ warehouse.address }}</td>
         <td>{{ warehouse.capacity }}</td>
         <td>{{ warehouse.volume }}</td>
+        <td> <button (click)="onDelete(warehouse, i)">Delete</button> </td>
     </tr>
 </table>
 
