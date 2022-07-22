@@ -8,10 +8,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { AllItemsComponent } from './all-items/all-items.component';
 import { WarehouseInventoryComponent } from './warehouse-inventory/warehouse-inventory.component';
 import { WarehouseFormComponent } from './warehouse-form/warehouse-form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { ButtonModule } from 'primeng/button';
 import { AllInventoryComponent } from './all-inventory/all-inventory.component';
+import { InventoryFormComponent } from './inventory-form/inventory-form.component';
 
 @NgModule({
   declarations: [
@@ -21,14 +22,16 @@ import { AllInventoryComponent } from './all-inventory/all-inventory.component';
     WarehouseInventoryComponent,
     WarehouseFormComponent,
     ItemFormComponent,
-    AllInventoryComponent
+    AllInventoryComponent,
+    InventoryFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ButtonModule
+    ButtonModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

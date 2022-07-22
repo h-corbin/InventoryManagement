@@ -1,0 +1,32 @@
+Add existing item to Warehouse
+<form [formGroup]="form" (ngSubmit)="submit(itemFromForm, inventoryFromForm)">
+    <label for="items">Item: </label>
+    <select formControlName="items" id="items">
+      <option *ngFor="let item of items; let i = index" [value]="items[i].id"  >
+        {{items[i].name}}
+      </option>
+    </select>
+    <label for="quantity">Quantity: </label>
+    <input type="numer" name="capacity"/>
+  
+    <button>submit</button>
+  </form>
+
+<br>
+
+Add new item to Warehouse
+<form (ngSubmit)="submit(itemFromForm, inventoryFromForm)">
+    <label for="name">Name: </label>
+    <input type="text" name="name" [(ngModel)]="itemFromForm.name"/>
+    
+    <label for="address">Description: </label>
+    <input type="text" name="address" [(ngModel)]="itemFromForm.description"/>
+
+    <label for="size">Size: </label>
+    <input type="number" name="size" [(ngModel)]="itemFromForm.size"/>
+
+    <label for="quantity"> Size: </label>
+    <input type="number" name="quantity" [(ngModel)]="inventoryFromForm.quantity"/>
+    
+    <input type="submit" value="Submit"/>
+</form>

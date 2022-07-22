@@ -31,7 +31,7 @@ export class WarehouseInventoryComponent implements OnInit {
   }
 
   ngOnChanges() {
-    this.itemApiService.findByWarehouse(this.warehouse).subscribe( resp =>
+    this.inventoryApiService.findByWarehouse(this.warehouse).subscribe( resp =>
       this.itemList = resp  
     )
   }

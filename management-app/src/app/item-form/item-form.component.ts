@@ -12,7 +12,7 @@ export class ItemFormComponent implements OnInit {
   itemFromForm :Item;
   itemApiService :ItemApiService;
 
-  @Output() warehousesUpdated = new EventEmitter();
+  @Output() itemsUpdated = new EventEmitter();
 
 
   constructor(itemApiService :ItemApiService) { 
@@ -25,7 +25,7 @@ export class ItemFormComponent implements OnInit {
 
   submit(item :Item) :void {
     this.itemApiService.save(item).subscribe( () => { // send post request to add to the database
-      this.warehousesUpdated.emit() // tell warehouse-list component to update
+      this.itemsUpdated.emit() // tell warehouse-list component to update
     }); 
 
     this.itemFromForm = new Item(); // reset the form

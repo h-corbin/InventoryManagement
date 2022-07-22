@@ -7,7 +7,7 @@ export class ExtendedInventory {
     itemName :String;
     itemDescription :String;
 
-    constructor(warehouseId :number=0, itemId :number=0, quantity :number=0, location :String, warehouseName :String="", itemName :String="", itemDescription :String="") {
+    constructor(warehouseId :number=0, itemId :number=0, quantity :number=0, location :String="", warehouseName :String="", itemName :String="", itemDescription :String="") {
         this.warehouseId = warehouseId;
         this.itemId = itemId;
         this.location = location;
