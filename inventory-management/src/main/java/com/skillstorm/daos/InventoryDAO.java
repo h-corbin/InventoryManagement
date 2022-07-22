@@ -23,5 +23,5 @@ public interface InventoryDAO {
 	// delete
 	public void delete(Inventory inventory);
 	public void delete(int warehouseId, int itemId);
-	public void deleteMany(Inventory[] inventoryRows);
+	public void deleteMany(List<Inventory> inventoryRows);
 }

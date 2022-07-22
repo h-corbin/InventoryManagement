@@ -18,6 +18,7 @@ export class WarehouseInventoryComponent implements OnInit {
   inventoryApiService :InventoryApiService;
   itemList :Array<ExtendedInventory> = [];
   @Input() warehouse :Warehouse = new Warehouse();
+  @Output() inventoryDeleted = new EventEmitter();
 
   
   constructor(itemApiService :ItemApiService, warehouseApiService :WarehouseApiService, inventoryApiService :InventoryApiService) { 
@@ -41,6 +42,18 @@ export class WarehouseInventoryComponent implements OnInit {
     if(confirm("Are you sure you want to delete item: " +extendedInventory.itemName + "from the warehouse? \n This action can't be reversed.")) {
       this.inventoryApiService.delete(inventory).subscribe(); // delete item
       this.itemList.splice(i,1); // remove from table
+    }
+  }
+
+  deleteAll(){
+    if(confirm("Are you sure you want to delete ALL items from the warehouse? \n This action can't be reversed.")) {
+      var inventoryList = []
+      for (var item of this.itemList) {
+        inventoryList.push(new Inventory(item.warehouseId, item.itemId))
+      }
+
+      this.inventoryApiService.deleteAll(inventoryList).subscribe(); 
+      this.inventoryDeleted.emit()
     }
   }
 

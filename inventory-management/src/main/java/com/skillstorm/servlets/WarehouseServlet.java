@@ -15,6 +15,7 @@ import com.skillstorm.daos.MySQLWarehouseDAOImpl;
 import com.skillstorm.daos.WarehouseDAO;
 import com.skillstorm.models.Warehouse;
 import com.skillstorm.services.UrlParserService;
+import com.skillstorm.services.ValidationService;
 
 @WebServlet(urlPatterns = "/warehouse/*")
 public class WarehouseServlet extends HttpServlet {
@@ -24,6 +25,7 @@ public class WarehouseServlet extends HttpServlet {
 	WarehouseDAO dao = new MySQLWarehouseDAOImpl();
 	ObjectMapper mapper = new ObjectMapper();
 	UrlParserService urlService = new UrlParserService();
+	ValidationService validationService = new ValidationService();
 	
 
 	@Override
@@ -50,15 +52,21 @@ public class WarehouseServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		InputStream reqBody = req.getInputStream(); // get JSON request body
 		Warehouse warehouse = mapper.readValue(reqBody, Warehouse.class); // translate to Warehouse object
-		warehouse = dao.save(warehouse); // add to database, get back object with generated key
 		
-		if (warehouse == null) { // unable to insert into database
-			resp.setStatus(400);
+		if (validationService.validateNums(warehouse.getCapacity())) {
+			warehouse = dao.save(warehouse); // add to database, get back object with generated key
+			
+			if (warehouse == null) { // unable to insert into database
+				resp.setStatus(500);
+			} else {
+				resp.setContentType("application/json");
+				resp.getWriter().print(mapper.writeValueAsString(warehouse));
+				resp.setStatus(201);
+			}
 		} else {
-			resp.setContentType("application/json");
-			resp.getWriter().print(mapper.writeValueAsString(warehouse));
-			resp.setStatus(201);
+			resp.setStatus(400);
 		}
+		
 	}
 	
 	@Override
@@ -67,12 +75,16 @@ public class WarehouseServlet extends HttpServlet {
 		InputStream reqBody = req.getInputStream(); // get JSON request body
 		Warehouse warehouse = mapper.readValue(reqBody, Warehouse.class); // translate to Warehouse object
 		
-		// update all attributes
-		dao.updateName(warehouse);
-		dao.updateCapacity(warehouse);
-		dao.updateAddress(warehouse);
-		dao.updateVolume(warehouse);
-		resp.setStatus(200);
+		if (validationService.validateNums(warehouse.getCapacity())) {
+			// update all attributes
+			dao.updateName(warehouse);
+			dao.updateCapacity(warehouse);
+			dao.updateAddress(warehouse);
+			dao.updateVolume(warehouse);
+			resp.setStatus(200);
+		} else {
+			resp.setStatus(400);
+		}
 		
 	}
 	

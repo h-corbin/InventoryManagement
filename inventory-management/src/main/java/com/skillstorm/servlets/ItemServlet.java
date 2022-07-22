@@ -15,6 +15,7 @@ import com.skillstorm.daos.ItemDAO;
 import com.skillstorm.daos.MySQLItemDAOImpl;
 import com.skillstorm.models.Item;
 import com.skillstorm.services.UrlParserService;
+import com.skillstorm.services.ValidationService;
 
 @WebServlet(urlPatterns = "/item/*")
 public class ItemServlet extends HttpServlet{
@@ -24,6 +25,7 @@ public class ItemServlet extends HttpServlet{
 	ItemDAO dao = new MySQLItemDAOImpl();
 	ObjectMapper mapper = new ObjectMapper();
 	UrlParserService urlService = new UrlParserService();
+	ValidationService validationService = new ValidationService();
 	
 
 	@Override
@@ -50,14 +52,20 @@ public class ItemServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		InputStream reqBody = req.getInputStream(); // get JSON request body
 		Item item = mapper.readValue(reqBody, Item.class); // translate to object
-		item = dao.save(item); // add to database, get back object with generated key
 		
-		if (item == null) { // unable to insert into database
-			resp.setStatus(500);
+		if (validationService.validateNums(item.getSize())) {
+			
+			item = dao.save(item); // add to database, get back object with generated key
+			
+			if (item == null) { // unable to insert into database
+				resp.setStatus(500);
+			} else {
+				resp.setContentType("application/json");
+				resp.getWriter().print(mapper.writeValueAsString(item));
+				resp.setStatus(201);
+			}
 		} else {
-			resp.setContentType("application/json");
-			resp.getWriter().print(mapper.writeValueAsString(item));
-			resp.setStatus(201);
+			resp.setStatus(400);
 		}
 	}
 	
@@ -67,11 +75,15 @@ public class ItemServlet extends HttpServlet{
 		InputStream reqBody = req.getInputStream(); // get JSON request body
 		Item item = mapper.readValue(reqBody, Item.class); // translate to object
 		
-		// update all attributes
-		dao.updateName(item);
-		dao.updateDescription(item);
-		dao.updateSize(item);
-		resp.setStatus(200);
+		if (validationService.validateNums(item.getSize())) {
+			// update all attributes
+			dao.updateName(item);
+			dao.updateDescription(item);
+			dao.updateSize(item);
+			resp.setStatus(200);
+		} else {
+			resp.setStatus(400);
+		}
 		
 	}
 	

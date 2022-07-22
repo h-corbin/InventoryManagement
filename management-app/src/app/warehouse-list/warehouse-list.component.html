@@ -14,6 +14,10 @@
 
 <br/>
 
+
 <app-warehouse-form (warehousesUpdated)="onUpdate()" ></app-warehouse-form>
 
-<app-warehouse-inventory [warehouse]="warehouseClicked" ></app-warehouse-inventory>
+<br/>
+<section [hidden]="hideItems" >
+    <app-warehouse-inventory  [warehouse]="warehouseClicked" (inventoryDeleted)="hideItems=true"></app-warehouse-inventory>
+</section>

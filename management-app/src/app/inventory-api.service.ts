@@ -34,4 +34,8 @@ export class InventoryApiService {
   delete(inventory :Inventory) :Observable<any> {
     return this.http.delete(this.url, {body: inventory})
   }
+
+  deleteAll(inventoryList :Array<Inventory>) :Observable<any> {
+    return this.http.delete(this.url + "deleteAll", {body: inventoryList});
+  }
 }

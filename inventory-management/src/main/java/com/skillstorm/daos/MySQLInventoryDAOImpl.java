@@ -241,9 +241,9 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 	}
 
 	@Override
-	public void deleteMany(Inventory[] inventoryRows) {
+	public void deleteMany(List<Inventory> inventoryRows) {
 		for (Inventory i: inventoryRows) {
-			delete(i.getWarehouseId(), i.getItemId());
+			delete(i);
 		}
 	}
 

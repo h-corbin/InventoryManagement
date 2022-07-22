@@ -13,6 +13,7 @@ export class WarehouseListComponent implements OnInit {
   warehouseApiService :WarehouseApiService;
   warehouseList :Array<Warehouse> = [];
   warehouseClicked :Warehouse = new Warehouse();
+  hideItems :boolean = true;
   
   constructor(warehouseApiService :WarehouseApiService) { 
     this.warehouseApiService = warehouseApiService;
@@ -49,12 +50,9 @@ export class WarehouseListComponent implements OnInit {
     }
   }
 
-  onWarehouseClick(warehouse :Warehouse) {
-    this.warehouseClicked = warehouse;
-  }
-
   showInventory(warehouse :Warehouse) {
     this.warehouseClicked = Object.assign({},warehouse)
+    this.hideItems = false;
   }
 
 }
