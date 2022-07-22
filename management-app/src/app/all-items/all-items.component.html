@@ -1,14 +1,24 @@
-<table>
-    <tr><th>ID</th><th>Name</th><th>Description</th><th>Size</th></tr>
-    <tr *ngFor="let item of itemList">
-        <td>{{ item.id }}</td>
-        <td> <input type="text" [(ngModel)]="item.name"/> </td>
-        <td> <input type="text" [(ngModel)]="item.description"/> </td>
-        <td> <input type="number" [(ngModel)]="item.size"/> </td>
-        <td> <button (click)="onChangeItem(item)">Update</button> </td>
-    </tr>
-</table>
-
-<br/>
-
-<app-item-form (itemsUpdated)="onUpdate()" ></app-item-form>
+<div class="container">
+    <li>
+        <h1>All items</h1>
+        <table class="styled-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th><th>Size</th></tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of itemList">
+                    <td> <input type="text" [(ngModel)]="item.name"/> </td>
+                    <td> <input id="description" type="text" [(ngModel)]="item.description"/> </td>
+                    <td> <input id="size"  type="number" [(ngModel)]="item.size"/> </td>
+                    <td> <button pButton type="button"  class="p-button-secondary p-button-raised p-button-sm" (click)="onChangeItem(item)">Update</button> </td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </li>
+    <li>
+        <app-item-form (itemsUpdated)="onUpdate()" ></app-item-form>
+    </li>
+    
+    
+</div>

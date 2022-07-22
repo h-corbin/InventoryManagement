@@ -1,7 +1,6 @@
-
-<ul class="flex-container">
-    <li class="flex-item">
-        <table class="table">
+<div class="container">
+    <li>
+        <table class="styled-table">
             <thead class="thead-dark">
                 <tr><th scope="col">Name</th>
                     <th scope="col">Address</th>
@@ -11,10 +10,10 @@
             <tbody>
                 <tr *ngFor="let warehouse of warehouseList; let i = index">
                     <td> <input type="text" [(ngModel)]="warehouse.name"/> </td>
-                    <td> <input type="text" [(ngModel)]="warehouse.address"/> </td>
-                    <td> <input type="number" step="0.01" [(ngModel)]="warehouse.capacity"/> </td>
-                    <td> <input type="number" step="0.01" [(ngModel)]="warehouse.volume"/> </td>
-                    <td> <button type="button" pButton label="Update" (click)="onUpdateSinlgeWarehouse(warehouse)"></button> </td>
+                    <td> <input id="address" type="text" [(ngModel)]="warehouse.address"/> </td>
+                    <td> <input class="number" type="number" step="0.01" [(ngModel)]="warehouse.capacity"/> </td>
+                    <td> <input class="number" type="number" step="0.01" [(ngModel)]="warehouse.volume"/> </td>
+                    <td> <button  type="button" pButton label="Update" (click)="onUpdateSinlgeWarehouse(warehouse)"></button> </td>
                     <td> <button type="button" pButton label="Delete"(click)="onDelete(warehouse, i)"></button> </td>
                     <td> <button type="button" pButton label="Inventory" (click)="showInventory(warehouse)"></button> </td>
                 </tr>
@@ -23,13 +22,18 @@
         </table>
     </li>
 
-    <li class="flex-item">
+    <li >
+        <h1>New Warehouse</h1>
         <app-warehouse-form (warehousesUpdated)="onUpdate()" ></app-warehouse-form>
     </li>
-</ul>
+    
+</div>
+<div class="container">
+    <section [hidden]="hideItems" >
+        <app-warehouse-inventory  [warehouse]="warehouseClicked" (inventoryDeleted)="hideItems=true"></app-warehouse-inventory>
+    </section>
+</div>
+
             
 
-       
-            <section [hidden]="hideItems" >
-                <app-warehouse-inventory  [warehouse]="warehouseClicked" (inventoryDeleted)="hideItems=true"></app-warehouse-inventory>
-            </section>
+            

@@ -1,21 +1,25 @@
-<form (ngSubmit)="submit(warehouseFromForm)">
-    <div class="form-group">
-        <label for="name">Name: </label>
-        <input type="text" class="form-control" name="name" [(ngModel)]="warehouseFromForm.name"/>
-    </div>
-    
-    <div class="form-group">
-        <label for="address">Adress: </label>
-        <input type="text" class="form-control" name="address" [(ngModel)]="warehouseFromForm.address"/>
-    </div>
+<div>
 
-    <div class="form-group">
-        <label for="capacity">Capacity: </label>
-    <input type="number"  class="form-control" name="capacity" [(ngModel)]="warehouseFromForm.capacity"/>
-    </div>
+    <form (ngSubmit)="submit(warehouseFromForm)">
+        <div class="form-group">
+            <label for="name">Name: </label>
+            <input type="text" class="form-control" name="name" [(ngModel)]="warehouseFromForm.name"/>
+        </div>
+        
+        <div class="form-group">
+            <label for="address">Adress: </label>
+            <input type="text" class="form-control" name="address" [(ngModel)]="warehouseFromForm.address"/>
+        </div>
     
-    <br>
+        <div class="form-group">
+            <label for="capacity">Capacity: </label>
+        <input type="number"  class="form-control" name="capacity" [(ngModel)]="warehouseFromForm.capacity"/>
+        </div>
+        
+        <br>
+    
+        <button type="button" pButton>Submit</button>
+    </form>
 
-    <input type="submit" class="btn btn-primary" value="Submit"/>
-</form>
+</div>
 
