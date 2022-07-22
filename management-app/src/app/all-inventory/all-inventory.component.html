@@ -6,7 +6,8 @@
         <td>{{ inventory.warehouseName }}</td>
         <td>{{ inventory.itemName }}</td>
         <td>{{ inventory.itemDescription }}</td>
-        <td>{{ inventory.quantity }}</td>
-        <td>{{ inventory.location }}</td>
+        <td> <input type="number" [(ngModel)]="inventory.quantity"/> </td>
+        <td> <input type="text" [(ngModel)]="inventory.location"/> </td>
+        <td> <button (click)="onChangeInventory(inventory)">Update</button> </td>
     </tr>
 </table>

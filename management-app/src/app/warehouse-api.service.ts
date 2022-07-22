@@ -31,4 +31,8 @@ export class WarehouseApiService {
     return this.http.delete(this.url, {body: warehouse})
   }
 
+  update(warehouse :Warehouse) :Observable<any> {
+    return this.http.put(this.url, warehouse)
+  }
+
 }

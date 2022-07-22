@@ -21,6 +21,10 @@ export class InventoryApiService {
     return this.http.post(this.url, inventory)
   }
 
+  update(inventory :Inventory) :Observable<any> {
+    return this.http.put(this.url, inventory)
+  }
+
   // returns all rows in the extended inventory (inventory join warehouse join item)
   findall() :Observable<any> {
     return this.http.get(this.url)

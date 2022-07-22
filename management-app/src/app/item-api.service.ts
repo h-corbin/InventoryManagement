@@ -24,6 +24,12 @@ export class ItemApiService {
     return this.http.post(this.url, item);
   }
 
+
+  update(item :Item) :Observable<any> {
+    return this.http.put(this.url, item)
+  }
+
+
   delete(item :Item) :Observable<any>{
     return this.http.delete(this.url, {body: item});
   }

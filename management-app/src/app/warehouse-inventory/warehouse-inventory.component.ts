@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
 import { ExtendedInventory } from 'src/models/ExtendedInventory';
 import { Inventory } from 'src/models/Inventory';
 import { Warehouse } from 'src/models/Warehouse';
@@ -58,8 +59,17 @@ export class WarehouseInventoryComponent implements OnInit {
     }
   }
 
-  addInventory() {
-    
+  onUpdateInventory(extendedInventory :ExtendedInventory) {
+    var inventory = new Inventory(extendedInventory.warehouseId, extendedInventory.itemId);
+    this.inventoryApiService.update(inventory).pipe(
+      catchError((err) => {
+        // can't delete if there are any items in the warehouse inventory
+        return throwError(() => new Error("Unable to update Warehouse"))
+      })
+    ).subscribe( {
+      next: (data) => {alert("Success: warehouse was updated")},
+      error: (err) => {alert(err); this.ngOnChanges();}
+    });
   }
 
 }

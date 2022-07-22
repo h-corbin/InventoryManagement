@@ -26,8 +26,20 @@ export class WarehouseListComponent implements OnInit {
 
   onUpdate() {
     this.warehouseApiService.findAll().subscribe(resp => {
-      // get request should repond with list of warehouses
+      // get request should respond with list of warehouses
       this.warehouseList = resp;
+    });
+  }
+
+  onUpdateSinlgeWarehouse(warehouse :Warehouse) {
+    this.warehouseApiService.update(warehouse).pipe(
+      catchError((err) => {
+        // can't delete if there are any items in the warehouse inventory
+        return throwError(() => new Error("Unable to update Warehouse"))
+      })
+    ).subscribe( {
+      next: (data) => {alert("Success: warehouse was updated")},
+      error: (err) => {alert(err); this.onUpdate();}
     });
   }
 

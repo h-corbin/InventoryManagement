@@ -2,9 +2,10 @@
     <tr><th>ID</th><th>Name</th><th>Description</th><th>Size</th></tr>
     <tr *ngFor="let item of itemList">
         <td>{{ item.id }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.description }}</td>
-        <td>{{ item.size }}</td>
+        <td> <input type="text" [(ngModel)]="item.name"/> </td>
+        <td> <input type="text" [(ngModel)]="item.description"/> </td>
+        <td> <input type="number" [(ngModel)]="item.size"/> </td>
+        <td> <button (click)="onChangeItem(item)">Update</button> </td>
     </tr>
 </table>
 

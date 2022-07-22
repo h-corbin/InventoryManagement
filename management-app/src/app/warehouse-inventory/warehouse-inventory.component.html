@@ -5,7 +5,9 @@
         <td>{{ item.itemName }}</td>
         <td>{{ item.itemDescription }}</td>
         <td>{{ item.quantity }}</td>
+        <td> <input type="number" [(ngModel)]="item.quantity"/> </td>
         <td> <button (click)="onDelete(item, i)">Delete</button> </td>
+        <td> <button (click)="onUpdateInventory(item)">Update</button> </td>
     </tr>
 </table>
 

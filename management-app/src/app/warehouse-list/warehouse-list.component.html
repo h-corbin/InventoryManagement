@@ -3,10 +3,11 @@
     <tr><th>ID</th><th>Name</th><th>Address</th><th>Capacity</th><th>Current Volume</th></tr>
     <tr *ngFor="let warehouse of warehouseList; let i = index">
         <td>{{ warehouse.id }}</td>
-        <td>{{ warehouse.name }}</td>
-        <td>{{ warehouse.address }}</td>
-        <td>{{ warehouse.capacity }}</td>
-        <td>{{ warehouse.volume }}</td>
+        <td> <input type="text" [(ngModel)]="warehouse.name"/> </td>
+        <td> <input type="text" [(ngModel)]="warehouse.address"/> </td>
+        <td> <input type="number" [(ngModel)]="warehouse.capacity"/> </td>
+        <td> <input type="number" [(ngModel)]="warehouse.volume"/> </td>
+        <td> <button (click)="onUpdateSinlgeWarehouse(warehouse)">Update</button> </td>
         <td> <button (click)="onDelete(warehouse, i)">Delete</button> </td>
         <td> <button (click)="showInventory(warehouse)">Show Inventory</button> </td>
     </tr>

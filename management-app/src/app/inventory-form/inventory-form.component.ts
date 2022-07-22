@@ -1,11 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormArray,
-  FormControl,
-  ValidatorFn
-} from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
 import { Inventory } from 'src/models/Inventory';
 import { Item } from 'src/models/Item';
@@ -20,7 +13,6 @@ import { ItemApiService } from '../item-api.service';
 })
 export class InventoryFormComponent implements OnInit {
 
-  form :FormGroup;
   items :Item[] = [];
   itemApiService :ItemApiService;
   inventoryAPiService :InventoryApiService
@@ -30,10 +22,7 @@ export class InventoryFormComponent implements OnInit {
   @Input() warehouse :Warehouse = new Warehouse();
   @Output() inventoryAdded = new EventEmitter();
 
-  constructor(formBuilder :FormBuilder, itemApiService :ItemApiService, inventoryApiService :InventoryApiService) { 
-    this.form = formBuilder.group({
-      items: ['']
-    });
+  constructor(itemApiService :ItemApiService, inventoryApiService :InventoryApiService) { 
     this.itemApiService = itemApiService;
     this.inventoryAPiService = inventoryApiService;
   }
