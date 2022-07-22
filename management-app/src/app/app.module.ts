@@ -11,6 +11,7 @@ import { WarehouseFormComponent } from './warehouse-form/warehouse-form.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { ButtonModule } from 'primeng/button';
+import {TableModule} from 'primeng/table';
 import { AllInventoryComponent } from './all-inventory/all-inventory.component';
 import { InventoryFormComponent } from './inventory-form/inventory-form.component';
 
@@ -31,6 +32,7 @@ import { InventoryFormComponent } from './inventory-form/inventory-form.componen
     HttpClientModule,
     FormsModule,
     ButtonModule,
+    TableModule,
     ReactiveFormsModule
   ],
   providers: [],

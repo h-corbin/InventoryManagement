@@ -1,24 +1,35 @@
 
-<table>
-    <tr><th>ID</th><th>Name</th><th>Address</th><th>Capacity</th><th>Current Volume</th></tr>
-    <tr *ngFor="let warehouse of warehouseList; let i = index">
-        <td>{{ warehouse.id }}</td>
-        <td> <input type="text" [(ngModel)]="warehouse.name"/> </td>
-        <td> <input type="text" [(ngModel)]="warehouse.address"/> </td>
-        <td> <input type="number" [(ngModel)]="warehouse.capacity"/> </td>
-        <td> <input type="number" [(ngModel)]="warehouse.volume"/> </td>
-        <td> <button (click)="onUpdateSinlgeWarehouse(warehouse)">Update</button> </td>
-        <td> <button (click)="onDelete(warehouse, i)">Delete</button> </td>
-        <td> <button (click)="showInventory(warehouse)">Show Inventory</button> </td>
-    </tr>
-</table>
+<ul class="flex-container">
+    <li class="flex-item">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr><th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Capacity</th>
+                    <th scope="col">Current Volume</th></tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let warehouse of warehouseList; let i = index">
+                    <td> <input type="text" [(ngModel)]="warehouse.name"/> </td>
+                    <td> <input type="text" [(ngModel)]="warehouse.address"/> </td>
+                    <td> <input type="number" step="0.01" [(ngModel)]="warehouse.capacity"/> </td>
+                    <td> <input type="number" step="0.01" [(ngModel)]="warehouse.volume"/> </td>
+                    <td> <button type="button" pButton label="Update" (click)="onUpdateSinlgeWarehouse(warehouse)"></button> </td>
+                    <td> <button type="button" pButton label="Delete"(click)="onDelete(warehouse, i)"></button> </td>
+                    <td> <button type="button" pButton label="Inventory" (click)="showInventory(warehouse)"></button> </td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </li>
 
-<br/>
+    <li class="flex-item">
+        <app-warehouse-form (warehousesUpdated)="onUpdate()" ></app-warehouse-form>
+    </li>
+</ul>
+            
 
-
-<app-warehouse-form (warehousesUpdated)="onUpdate()" ></app-warehouse-form>
-
-<br/>
-<section [hidden]="hideItems" >
-    <app-warehouse-inventory  [warehouse]="warehouseClicked" (inventoryDeleted)="hideItems=true"></app-warehouse-inventory>
-</section>
+       
+            <section [hidden]="hideItems" >
+                <app-warehouse-inventory  [warehouse]="warehouseClicked" (inventoryDeleted)="hideItems=true"></app-warehouse-inventory>
+            </section>

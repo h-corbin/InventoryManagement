@@ -1,7 +1,12 @@
-<nav>
-    <a [routerLink]="['/warehouse-list']">List Warehouses</a> 
-    | <a [routerLink]="['/item-list']">List All Items</a> 
-    | <a [routerLink]="['/inventory-list']">Complete Inventory</a> 
+<nav class="navbar navbar-expand-lg ">
+    <a href="#" class="navbar-brand h1">Warehouse Manager</a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <li class="nav-item"> <a class="nav-link active" [routerLink]="['/warehouse-list']">List Warehouses</a>  </li>
+        <li class="nav-item"> <a class="nav-link active" [routerLink]="['/item-list']">List All Items</a>  </li>
+        <li class="nav-item"> <a class="nav-link active" [routerLink]="['/inventory-list']">Complete Inventory</a> </li> 
+    </div>
+    
 </nav>
 
 <section>

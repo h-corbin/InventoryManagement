@@ -1,0 +1,8 @@
+.container {
+    display: flex; /* or inline-flex */
+    justify-content: center;
+  }
+
+  li {
+    list-style-type: none;
+}
