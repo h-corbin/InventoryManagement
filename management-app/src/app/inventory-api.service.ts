@@ -17,6 +17,10 @@ export class InventoryApiService {
   }
 
 
+  save(inventory :Inventory) :Observable<any> {
+    return this.http.post(this.url, inventory)
+  }
+
   // returns all rows in the extended inventory (inventory join warehouse join item)
   findall() :Observable<any> {
     return this.http.get(this.url)
@@ -28,6 +32,11 @@ export class InventoryApiService {
   }
 
   // returns all rows with warehouseId matching the Inventory object
+  InventoryByWarehouse(inventory :Inventory) :Observable<any> {
+    return this.http.put(this.url + "warehouse", inventory)
+  }
+
+
   findByWarehouse(warehouse :Warehouse) :Observable<any> {
     return this.http.put(this.url+ "warehouse", warehouse);
   }

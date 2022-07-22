@@ -67,7 +67,10 @@ public class InventoryServlet extends HttpServlet{
 		
 		Item item = itemDao.findById(inventory.getItemId());
 		Warehouse warehouse = warehouseDao.findById(inventory.getWarehouseId());
-		if (validationService.validateCapacity(item, warehouse) && validationService.validateNums(inventory.getQuantity())) {
+		if (validationService.validateNums(inventory.getQuantity()) == false) {
+			resp.setStatus(400); // invalids num
+		}
+		else if (validationService.validateCapacity(item, warehouse) && validationService.validateNums(inventory.getQuantity())) {
 			inventory = dao.save(inventory);
 			if (inventory == null) { // unable to insert into database
 				resp.setStatus(500);
@@ -77,7 +80,7 @@ public class InventoryServlet extends HttpServlet{
 				resp.setStatus(201);
 			}
 		} else {
-			resp.setStatus(400);
+			resp.setStatus(409); // exceeds capacity limit
 		}
 	}
 	

@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Warehouse } from 'src/models/Warehouse';
 
 @Injectable({
@@ -28,9 +28,7 @@ export class WarehouseApiService {
   // deletes warehouse from the database
   // if items are in the warehouse, an error will be thrown
   delete(warehouse :Warehouse) :Observable<any> {
-    return this.http.delete(this.url, {body: warehouse}).pipe(
-      catchError( throwError )
-    )
+    return this.http.delete(this.url, {body: warehouse})
   }
 
 }

@@ -19,6 +19,7 @@ export class WarehouseInventoryComponent implements OnInit {
   itemList :Array<ExtendedInventory> = [];
   @Input() warehouse :Warehouse = new Warehouse();
   @Output() inventoryDeleted = new EventEmitter();
+  @Output() inventoryAdded = new EventEmitter();
 
   
   constructor(itemApiService :ItemApiService, warehouseApiService :WarehouseApiService, inventoryApiService :InventoryApiService) { 
@@ -55,6 +56,10 @@ export class WarehouseInventoryComponent implements OnInit {
       this.inventoryApiService.deleteAll(inventoryList).subscribe(); 
       this.inventoryDeleted.emit()
     }
+  }
+
+  addInventory() {
+    
   }
 
 }
