@@ -1,4 +1,3 @@
-import { formatCurrency } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Warehouse } from 'src/models/Warehouse';
 import { WarehouseApiService } from '../warehouse-api.service';

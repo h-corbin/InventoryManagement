@@ -19,7 +19,7 @@ public interface ItemDAO {
 		public void updateSize(Item item);
 		
 		// delete
-		public void delete(Item item);
-		public void delete(int id);
-		public void deleteMany(int[] ids);
+		public boolean delete(Item item);
+		public boolean delete(int id);
+		public boolean deleteMany(int[] ids);
 }

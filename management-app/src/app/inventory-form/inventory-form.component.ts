@@ -17,6 +17,7 @@ export class InventoryFormComponent implements OnInit {
   itemApiService :ItemApiService;
   inventoryAPiService :InventoryApiService
   inventoryFromForm :Inventory = new Inventory()
+  inventoryFromFormExisting :Inventory = new Inventory();
   itemFromForm :Item = new Item();
   selectedId = 0;
   @Input() warehouse :Warehouse = new Warehouse();
@@ -39,7 +40,7 @@ export class InventoryFormComponent implements OnInit {
 
   // add to inventory
   add() :void {
-    var newInvenetory = new Inventory(this.warehouse.id, this.selectedId, this.inventoryFromForm.quantity);
+    var newInvenetory = new Inventory(this.warehouse.id, this.selectedId, this.inventoryFromFormExisting.quantity);
     this.inventoryAPiService.save(newInvenetory).pipe(
       catchError((err) => {
         return throwError(() => new Error("Unable to add item \n Quantity is invlaid or exceeds warehouse capacity."))
@@ -68,7 +69,7 @@ export class InventoryFormComponent implements OnInit {
     ).subscribe( {
         next: (resp) => {
           var newItem :Item = resp; 
-          var inventory = new Inventory(this.warehouse.id, newItem.id, this.inventoryFromForm.quantity);
+          var inventory = new Inventory(this.warehouse.id, newItem.id, this.inventoryFromForm.quantity, this.inventoryFromForm.location);
           this.inventoryAPiService.save(inventory).pipe(
             catchError((err) => {
               return throwError(() => new Error("Unable to add item \n Quantity is invlaid or exceeds warehouse capacity."))

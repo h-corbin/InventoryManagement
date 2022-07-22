@@ -40,4 +40,23 @@ export class AllItemsComponent implements OnInit {
     });
   }
 
+  onDelete(item :Item, i :any){
+
+    if(confirm("Are you sure you want to delete item: " +item.name + "? \n This action can't be reversed.")) {
+    
+      // attempts to delete warehouse
+      this.itemApiService.delete(item).pipe(
+        catchError((err) => {
+          // can't delete if item is in an inventory
+          return throwError(() => new Error("Unable to delete item. \n Make sure it is removed from inventory before deleting."))
+        })
+      ).subscribe( {
+        next: (data) => {alert("Success: warehouse was deleted"); this.itemList.splice(i,1);},
+        error: (err) => {alert(err)}
+      });
+
+      
+    }
+  }
+
 }
