@@ -12,7 +12,7 @@ import { InventoryApiService } from '../inventory-api.service';
 export class AllInventoryComponent implements OnInit {
 
   inventoryApiService :InventoryApiService;
-  expandedInventoryList :Array<ExtendedInventory> = [];
+  extendedInventoryList :Array<ExtendedInventory> = [];
   
   constructor(inventoryApiService :InventoryApiService) { 
     this.inventoryApiService = inventoryApiService;
@@ -25,7 +25,7 @@ export class AllInventoryComponent implements OnInit {
   onUpdate() :void {
     this.inventoryApiService.findall().subscribe(resp => {
       // get request should repond with extended inventory list
-      this.expandedInventoryList= resp;
+      this.extendedInventoryList= resp;
     });
   }
 
@@ -39,6 +39,14 @@ export class AllInventoryComponent implements OnInit {
       next: (data) => {alert("Success: inventory was updated")},
       error: (err) => {alert(err); this.onUpdate();}
     });
+  }
+
+  onDeleteInventory(extendedInventory: ExtendedInventory, i :any) {
+    var inventory = new Inventory(extendedInventory.warehouseId, extendedInventory.itemId)
+    if(confirm("Are you sure you want to delete item: " +extendedInventory.itemName + "from the warehouse? \n This action can't be reversed.")) {
+      this.inventoryApiService.delete(inventory).subscribe(); // delete item
+      this.extendedInventoryList.splice(i,1); // remove from table
+    }
   }
 
 }

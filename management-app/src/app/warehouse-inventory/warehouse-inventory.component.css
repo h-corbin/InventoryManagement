@@ -1,9 +1,12 @@
 .container {
     display: flex;
     justify-content: center;
-    margin: 3em; 
-}
-
+    margin: 2em; 
+  }
+  
+  li {
+    margin:30px;
+  }
 .styled-table {
     border-collapse: collapse;
     font-size: 0.8em;

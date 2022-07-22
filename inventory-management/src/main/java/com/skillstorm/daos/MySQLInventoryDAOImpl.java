@@ -20,7 +20,7 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 	 */
 	@Override
 	public Inventory save(Inventory inventory) {
-		String sql = "INSERT INTO Inventory (ItemId, WarehouseId, Quantity) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO Inventory (ItemId, WarehouseId, Quantity, Location) VALUES (?, ?, ?, ?)";
 		
 		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
 			// start a transaction
@@ -29,6 +29,7 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 			ps.setInt(1, inventory.getItemId());
 			ps.setInt(2, inventory.getWarehouseId());
 			ps.setInt(3, inventory.getQuantity());
+			ps.setString(4, inventory.getLocation());
 			
 			int rowsAffected = ps.executeUpdate();
 			// if 0 is returned, data did not save

@@ -92,8 +92,12 @@ public class ItemServlet extends HttpServlet{
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		InputStream reqBody = req.getInputStream(); // get JSON request body
 		Item item = mapper.readValue(reqBody, Item.class); // translate to object
-		dao.delete(item);
-		resp.setStatus(200);
+		boolean success = dao.delete(item);
+		if (success) {
+			resp.setStatus(200);
+		} else {
+			resp.setStatus(400);
+		}
 	}
 
 }

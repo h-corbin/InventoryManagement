@@ -1,11 +1,10 @@
 .container {
   display: flex;
   justify-content: center;
-  margin: 2em; 
 }
 
 li {
-  margin:30px;
+  margin:3em;
 }
 
 .styled-table {

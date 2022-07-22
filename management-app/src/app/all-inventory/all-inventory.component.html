@@ -5,13 +5,14 @@
             <tr><th>Warehouse</th><th>Item</th><th>Description</th><th>Quantity</th><th>Location</th></tr>
         </thead>
         <tbody>
-            <tr *ngFor="let inventory of expandedInventoryList">
+            <tr *ngFor="let inventory of extendedInventoryList; let i = index">
                 <td>{{ inventory.warehouseName }}</td>
                 <td>{{ inventory.itemName }}</td>
                 <td>{{ inventory.itemDescription }}</td>
                 <td> <input class="input" type="number" [(ngModel)]="inventory.quantity"/> </td>
                 <td> <input class="input" type="text" [(ngModel)]="inventory.location"/> </td>
                 <td> <button pButton type="button"  class="p-button-secondary p-button-raised p-button-sm" (click)="onChangeInventory(inventory)">Update</button> </td>
+                <td> <button pButton type="button"  class="p-button-secondary p-button-raised p-button-sm"  (click)="onDeleteInventory(inventory, i)">Delete</button> </td>
             </tr>
         </tbody>
          

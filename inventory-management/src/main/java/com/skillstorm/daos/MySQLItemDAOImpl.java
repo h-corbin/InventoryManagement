@@ -164,7 +164,7 @@ public class MySQLItemDAOImpl implements ItemDAO{
      * @param id ItemId for row to delete in database
      */
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		String sql = "DELETE FROM Item WHERE ItemId = ?";
 
         try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
@@ -176,24 +176,30 @@ public class MySQLItemDAOImpl implements ItemDAO{
 
             if (rowsAffected != 0) {
                 conn.commit(); // commit transaction
+                return true;
             } else {
                 conn.rollback(); // rollback if nothing was returned
+                return false;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            return false;
         }
 	}
 	
 	@Override
-	public void delete(Item item) {
-		delete(item.getId());
+	public boolean delete(Item item) {
+		return delete(item.getId());
 	}
 
 	@Override
-	public void deleteMany(int[] ids) {
+	public boolean deleteMany(int[] ids) {
 		for (int id : ids) {
-            delete(id);
+            boolean success = delete(id);
+            if (!success) {
+            	return false;
+            }
         }
+		return true;
 	}
 
 }

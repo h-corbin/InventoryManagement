@@ -114,8 +114,8 @@ public class InventoryServlet extends HttpServlet{
 		} catch (Exception e) {
 			InputStream reqBody = req.getInputStream(); // get JSON request body
 			Inventory inventory = mapper.readValue(reqBody, Inventory.class); // translate to object
+			System.out.println(inventory);
 			dao.delete(inventory);
-			resp.setStatus(200);
 		}
 	}
 }
