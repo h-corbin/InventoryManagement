@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    justify-content: center;
+    margin: 2em; 
+}
+
+li {
+    margin:30px;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    font-size: 0.8em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #E3AB14;
+    color: #ffffff;
+    text-align: center;
+}
+
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+#size {
+    width: 100px
+}
+
+#description {
+    width: 400px
+}

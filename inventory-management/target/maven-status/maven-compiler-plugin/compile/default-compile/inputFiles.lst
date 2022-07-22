@@ -1,0 +1,17 @@
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/servlets/InventoryByItemServlet.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/daos/WarehouseDAO.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/daos/MySQLInventoryDAOImpl.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/services/UrlParserService.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/servlets/InventoryByWarehouseServlet.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/servlets/WarehouseServlet.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/daos/MySQLWarehouseDAOImpl.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/models/Inventory.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/servlets/ItemServlet.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/filters/CORSFilter.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/daos/InventoryDAO.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/models/Warehouse.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/daos/MySQLItemDAOImpl.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/daos/ItemDAO.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/models/Item.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/servlets/InventoryServlet.java
+/Users/macbookpro/Documents/Holly/Skillstorm/Project1/InventoryManagement/inventory-management/src/main/java/com/skillstorm/conf/InventoryManagementDBCreds.java

@@ -1,0 +1,32 @@
+
+
+<label for="items">Item: </label>
+<select name="items" (change)="changeSelectedItem($event)">
+    <option *ngFor="let item of items" [value]="item.id" name="items">
+    {{ item.name }}
+    </option>
+</select>
+
+<label for="quantity">Quantity: </label>
+<input type="number" name="quantity" [(ngModel)]="inventoryFromForm.quantity"/>
+  
+<button (click)="add()" >Submit</button>
+
+<br>
+
+Add new item to Warehouse
+<form (ngSubmit)="save(itemFromForm)">
+    <label for="name">Name: </label>
+    <input type="text" name="name" [(ngModel)]="itemFromForm.name"/>
+    
+    <label for="address">Description: </label>
+    <input type="text" name="address" [(ngModel)]="itemFromForm.description"/>
+
+    <label for="size">Size: </label>
+    <input type="number" name="size" [(ngModel)]="itemFromForm.size"/>
+
+    <label for="quantity"> Quantity: </label>
+    <input type="number" name="quantity" [(ngModel)]="inventoryFromForm.quantity"/>
+    
+    <input type="submit" value="Submit"/>
+</form>

@@ -1,0 +1,21 @@
+<form (ngSubmit)="submit(itemFromForm)">
+    <h1>New Item</h1>
+    <div class="form-group" >
+        <label for="name">Name: </label>
+        <input class="form-control" type="text" name="name" [(ngModel)]="itemFromForm.name"/>
+    </div>
+
+    <div class="form-group" >
+        <label for="address">Description: </label>
+        <input class="form-control" type="text" name="address" [(ngModel)]="itemFromForm.description"/>
+    </div>
+    
+    <div class="form-group" >
+        <label for="size">Size: </label>
+        <input class="form-control" type="number" name="size" [(ngModel)]="itemFromForm.size"/>
+    </div>
+
+    <br>
+    
+    <input type="submit" value="Submit"/>
+</form>

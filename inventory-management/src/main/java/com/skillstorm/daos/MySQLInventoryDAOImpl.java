@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.skillstorm.conf.InventoryManagementDBCreds;
+import com.skillstorm.models.ExtendedInventory;
 import com.skillstorm.models.Inventory;
 
 public class MySQLInventoryDAOImpl implements InventoryDAO{
@@ -43,6 +44,7 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 		
 		return null;
 	}
+	
 
 	
 	// helper for find methods
@@ -73,17 +75,9 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 		String sql = "SELECT * FROM Inventory";
 		return executeFind(sql, null);
 	}
-
-	/**
-	 * @param id WarehouseId of the warehouse to search for
-	 * @return Warehouse object with the given id, if found. Null if not found
-	 */
-	@Override
-	public List<Inventory> findByWarehouseId(int id) {
-		String sql = "SELECT * FROM Inventory WHERE WarehouseId = ?";
-		return executeFind(sql, id);
-	}
-
+	
+	
+	
 	/**
 	 * @param id ItemId of the warehouse to search for
 	 * @return Warehouse object with the given id, if found. Null if not found
@@ -93,6 +87,59 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 		String sql = "SELECT * FROM Inventory WHERE ItemId = ?";
 		return executeFind(sql, id);
 	}
+	
+	
+	// helper for extended find methods
+	private List<ExtendedInventory> executeExtendedFind(String sql, Integer findValue) {
+		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
+			LinkedList<ExtendedInventory> inventoryList = new LinkedList<>();		
+			PreparedStatement ps = conn.prepareStatement(sql);
+			if (findValue != null) ps.setObject(1, findValue);
+			ResultSet rs = ps. executeQuery();
+			
+			
+			while(rs.next()) {
+				ExtendedInventory inventory = new ExtendedInventory(rs.getInt("Item.ItemId"), rs.getInt("Warehouse.WarehouseId"), rs.getInt("Inventory.Quantity"),
+						rs.getString("Inventory.Location"), rs.getString("Warehouse.Name"), rs.getString("Item.Name"),  rs.getString("Item.Description"));
+				inventoryList.add(inventory);
+			}
+	
+			return inventoryList;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	
+	
+	/**
+	 * @return List of rows in Inventory table, inner join with Warehouse and Item. Null in the event of failure
+	 */
+	@Override
+	public List<ExtendedInventory> extendedFindAll() {
+		String sql = "SELECT Inventory.Quantity, Inventory.Location, Warehouse.WarehouseId, Item.ItemId, "
+				+ "Warehouse.Name, Item.Name, Item.Description "
+				+ "FROM Inventory "
+				+ "JOIN Warehouse ON Inventory.WarehouseId = Warehouse.WarehouseId "
+				+ "JOIN Item ON Inventory.ItemId = Item.ItemId";
+		return executeExtendedFind(sql, null);
+	}
+
+	/**
+	 * @param id WarehouseId of the warehouse to search for
+	 * @return Warehouse object with the given id, if found. Null if not found
+	 */
+	@Override
+	public List<ExtendedInventory> findItemsByWarehouseId(int id) {
+		String sql = "SELECT Inventory.Quantity, Inventory.Location, Warehouse.WarehouseId, Item.ItemId, "
+				+ "Warehouse.Name, Item.Name, Item.Description "
+				+ "FROM Inventory "
+				+ "JOIN Warehouse ON Inventory.WarehouseId = Warehouse.WarehouseId "
+				+ "JOIN Item ON Inventory.ItemId = Item.ItemId "
+				+ "WHERE Warehouse.WarehouseID = ?";
+		return executeExtendedFind(sql, id);
+	}
+
+	
 
 	/**
 	 * @param warehouseId WarehouseId of the inventory row to search for
@@ -118,17 +165,14 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 		return null; // indicates failure
 	}
 
-	/**
-	 * @param inventory Inventory object with quantity to be updated in the database
-	 */
-	@Override
-	public void updateQuantity(Inventory inventory) {
-		String sql = "UPDATE Inventory SET Quantity = ? WHERE WarehouseId = ? AND ItemId = ?";
-		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
+	
+	// helper method for updates
+    private void executeUpdate(String sql, Inventory inventory, Object updatedValue) {
+    	try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
 			conn.setAutoCommit(false); // start a transaction
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, inventory.getQuantity());
+			ps.setObject(1, updatedValue);
 			ps.setInt(2, inventory.getWarehouseId());
 			ps.setInt(3, inventory.getItemId() );
 			
@@ -143,7 +187,25 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+    }
+	
+	/**
+	 * @param inventory Inventory object with quantity to be updated in the database
+	 */
+	@Override
+	public void updateQuantity(Inventory inventory) {
+		String sql = "UPDATE Inventory SET Quantity = ? WHERE WarehouseId = ? AND ItemId = ?";
+		executeUpdate(sql, inventory, inventory.getQuantity());
 		
+	}
+	
+	/**
+     * @param inventory Inventory object with location to be updated in the database
+     */
+	@Override
+	public void updateLocation(Inventory inventory) {
+		String sql = "UPDATE Inventory SET Location = ? WHERE WarehouseId = ? AND ItemId = ?";
+        executeUpdate(sql, inventory, inventory.getLocation());
 	}
 
 
@@ -179,9 +241,9 @@ public class MySQLInventoryDAOImpl implements InventoryDAO{
 	}
 
 	@Override
-	public void deleteMany(Inventory[] inventoryRows) {
+	public void deleteMany(List<Inventory> inventoryRows) {
 		for (Inventory i: inventoryRows) {
-			delete(i.getWarehouseId(), i.getItemId());
+			delete(i);
 		}
 	}
 

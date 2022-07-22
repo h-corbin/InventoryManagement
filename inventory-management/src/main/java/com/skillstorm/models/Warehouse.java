@@ -4,7 +4,7 @@ public class Warehouse {
 	
 	private int id;
 	private String name;
-	private String location;
+	private String address;
 	private double capacity;
 	private double volume;
 	
@@ -23,8 +23,8 @@ public class Warehouse {
 		this(0, name, "", capacity, 0.0);
 	}
 	
-	public Warehouse(String name, String location, double capacity) {
-		this(0, name, location, capacity, 0.0);
+	public Warehouse(String name, String address, double capacity) {
+		this(0, name, address, capacity, 0.0);
 	}
 
 
@@ -32,15 +32,15 @@ public class Warehouse {
 		this(0, name, "", capacity, volume);
 	}
 	
-	public Warehouse(String name, String location, double capacity, double volume) {
-		this(0, name, location, capacity, volume);
+	public Warehouse(String name, String address, double capacity, double volume) {
+		this(0, name, address, capacity, volume);
 	}
 	
-	public Warehouse(int id, String name, String location, double capacity, double volume) {
+	public Warehouse(int id, String name, String address, double capacity, double volume) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.location = location;
+		this.address = address;
 		this.capacity = capacity;
 		this.volume = volume;
 	}
@@ -65,13 +65,13 @@ public class Warehouse {
 		this.name = name;
 	}
 	
-	public String getLocation() {
-		return location;
+	public String getAddress() {
+		return address;
 	}
 
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setAddress(String location) {
+		this.address = location;
 	}
 
 	public double getCapacity() {
@@ -96,7 +96,7 @@ public class Warehouse {
 
 	@Override
 	public String toString() {
-		return "Warehouse [id=" + id + ", name=" + name + ", location=" + location + ", capacity=" + capacity
+		return "Warehouse [id=" + id + ", name=" + name + ", address=" + address + ", capacity=" + capacity
 				+ ", volume=" + volume + "]";
 	}
 

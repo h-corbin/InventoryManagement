@@ -5,18 +5,24 @@ public class Inventory {
 	int itemId;
 	int warehouseId;
 	int quantity;
+	private String location;
 	
 	public Inventory() {}
 	
 	public Inventory(int itemId, int warehouseId) {
-		this(itemId, warehouseId, 0);
+		this(itemId, warehouseId, 0, "");
+	}
+	
+	public Inventory(int itemId, int warehouseId, int quantity) {
+		this(itemId, warehouseId, quantity, "");
 	}
 
-	public Inventory(int itemId, int warehouseId, int quantity) {
+	public Inventory(int itemId, int warehouseId, int quantity, String location) {
 		super();
 		this.itemId = itemId;
 		this.warehouseId = warehouseId;
 		this.quantity = quantity;
+		this.location = location;
 	}
 
 	public int getItemId() {
@@ -42,11 +48,21 @@ public class Inventory {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
 
 	@Override
 	public String toString() {
-		return "Inventory [itemId=" + itemId + ", warehouseId=" + warehouseId + ", quantity=" + quantity + "]";
+		return "Inventory [itemId=" + itemId + ", warehouseId=" + warehouseId + ", quantity=" + quantity + ", location="
+				+ location + "]";
 	}
+
 	
 	
 

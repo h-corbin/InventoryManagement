@@ -21,14 +21,16 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 	 */
 	@Override
 	public Warehouse save(Warehouse warehouse) {
-		String sql = "INSERT INTO Warehouse (Name, Capacity) VALUES (?, ?)";
+		String sql = "INSERT INTO Warehouse (Name, Address, Capacity, CurrentVolume) VALUES (?, ?, ?, ?)";
 		
 		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
 			// start a transaction
 			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, warehouse.getName());
-			ps.setDouble(2, warehouse.getCapacity());
+			ps.setString(2, warehouse.getAddress());
+			ps.setDouble(3, warehouse.getCapacity());
+			ps.setDouble(4, warehouse.getVolume());
 			
 			int rowsAffected = ps.executeUpdate();
 			// if 0 is returned, data did not save
@@ -44,6 +46,7 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 				conn.rollback(); // rollback if nothing was returned
 			} 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return null;
 		}
 		
@@ -67,7 +70,7 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 			ResultSet rs = ps. executeQuery();
 			
 			while(rs.next()) {
-				Warehouse warehouse = new Warehouse(rs.getInt("WarehouseId"), rs.getString("Name"), rs.getString("Location"), rs.getDouble("Capacity"), rs.getDouble("CurrentVolume"));
+				Warehouse warehouse = new Warehouse(rs.getInt("WarehouseId"), rs.getString("Name"), rs.getString("Address"), rs.getDouble("Capacity"), rs.getDouble("CurrentVolume"));
 				warehouseList.add(warehouse);
 			}
 	
@@ -87,7 +90,7 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next()) {
-				return new Warehouse(rs.getInt("WarehouseId"), rs.getString("Name"), rs.getString("Location"), rs.getDouble("Capacity"), rs.getDouble("CurrentVolume"));	
+				return new Warehouse(rs.getInt("WarehouseId"), rs.getString("Name"), rs.getString("Address"), rs.getDouble("Capacity"), rs.getDouble("CurrentVolume"));	
 			}
 		} catch (SQLException e) {
 			return null;
@@ -113,16 +116,6 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 	public Warehouse findByName(String name) {
 		String sql = "SELECT * FROM Warehouse WHERE Name = ?";
 		return executeFind(sql, name);
-	}
-	
-	/**
-	 * @param location location of the warehouse to search for
-	 * @return Warehouse object with the given location, if found. Null if not found
-	 */
-	@Override
-	public Warehouse findByLocation(String location) {
-		String sql = "SELECT * FROM Warehouse WHERE Location = ?";
-		return executeFind(sql, location);
 	}
 	
 	
@@ -181,17 +174,18 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 	 * @param warehouse Warehouse object with location field to be updated in the database
 	 */
 	@Override
-	public void updateLocation(Warehouse warehouse) {
-		String sql = "UPDATE Warehouse SET CurrentVolume = ? WHERE WarehouseId = ?";
-		executeUpdate(sql, warehouse, warehouse.getLocation());
+	public void updateAddress(Warehouse warehouse) {
+		String sql = "UPDATE Warehouse SET Address = ? WHERE WarehouseId = ?";
+		executeUpdate(sql, warehouse, warehouse.getAddress());
 	}
 
 
 	/**
 	 * @param id WarehouseId for row to delete in database
-	 */
+	 * @return 1 if successful, -1 in the even t of failure
+	 */ 
 	@Override
-	public void delete(int id) {
+	public int delete(int id) {
 		String sql = "DELETE FROM Warehouse WHERE WarehouseId = ?";
 		
 		try (Connection conn = InventoryManagementDBCreds.getInstance().getConnection()) {
@@ -203,25 +197,33 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO{
 			
 			if (rowsAffected != 0) {
 				conn.commit(); // commit transaction
+				
 			} else {
 				conn.rollback(); // rollback if nothing was returned
+				return -1;
 			} 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return -1;
 		}
+		return 1;
 		
 	}
 	
 	
 	@Override
-	public void delete(Warehouse warehouse) {
-		delete(warehouse.getId());
+	public int delete(Warehouse warehouse) {
+		return delete(warehouse.getId());
 	}
 
 	@Override
-	public void deleteMany(int[] ids) {
+	public int deleteMany(int[] ids) {
 		for (int id : ids) {
-			delete(id);
+			int success =  delete(id);
+			if (success == -1) {
+				return -1;
+			}
 		}
+		return 1;
+		
 	}
 }
